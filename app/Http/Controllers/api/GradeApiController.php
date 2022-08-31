@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 class GradeApiController extends Controller
 {
     /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,9 +25,7 @@ class GradeApiController extends Controller
     public function index(Request $request)
     {
 
-
-            $grades = Grade::with('classes.Section.lessons')->get();
-            // Grade::with(['classs'])->get();
+        $grades =  Grade::all();
             return response()->json([
             'message'=> 'all grade done',
             'status' => true ,

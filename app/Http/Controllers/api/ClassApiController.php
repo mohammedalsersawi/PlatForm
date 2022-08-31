@@ -16,8 +16,13 @@ class ClassApiController extends Controller
      */
     public function index(Request $request)
     {
-        return Classroom::all();
-       // return Classroom::with(['classs'])->get();
+
+        $Class = Classroom::all();
+            return response()->json([
+            'message'=> 'all grade done',
+            'status' => true ,
+            'Classroom' => $Class,
+            ]);
 
     }
 

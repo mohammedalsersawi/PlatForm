@@ -18,12 +18,11 @@ class SectionApiController extends Controller
     {
        // return Section::with(['lessons'])->get();
 
-        Section::with(['lessons'])->get();
-        return response()->json([
+       return response()->json([
         'message'=> 'all grade done',
         'status' => true ,
         'date' =>  [
-        'Section' => Section::with(['lessons'])->get() ,
+        'Section' => Section::all(),
         ],
         ]);
 

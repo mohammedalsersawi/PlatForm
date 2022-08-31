@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -8,6 +9,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
         <!-- Styles -->
         <style>
@@ -27,10 +29,10 @@
                     @auth
                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                            <a href="{{ route('register') }}" class="btn btn-primary ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
                         @endif
                     @endauth
                 </div>
@@ -40,12 +42,12 @@
                 @if (Route::has('admin.login'))
                     <div class="">
                         @auth('admin')
-                            <a href="{{ url('/admin/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Admin Dashboard</a>
+                            <a href="{{ url('/admin/dashboard') }}" class="btn btn-primary text-sm text-gray-700 dark:text-gray-500 underline">Admin Dashboard</a>
                         @else
-                            <a href="{{ route('admin.login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Admin Log in</a>
+                            <a href="{{ route('admin.login') }}" class="btn btn-danger">Admin Log in</a>
 
                             @if (Route::has('admin.register'))
-                                <a href="{{ route('admin.register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Admin Register</a>
+                                <a href="{{ route('admin.register') }}" class="btn btn-danger">Admin Register</a>
                             @endif
                         @endauth
                     </div>
