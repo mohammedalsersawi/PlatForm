@@ -42,9 +42,6 @@ class GradeController extends Controller
     {
         $validated = $request->validated();
         $Grade = new Grade();
-        $request->validate([
-            'mobile' => 'required|unique:table,column,except,id'
-        ])
 
         // 'Name' => اسم الحقل في الداتا بيز
 
