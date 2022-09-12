@@ -1,13 +1,20 @@
 <?php
 
-use App\Http\Controllers\classroom\classroomController;
+use App\Http\Controllers\AdminController\AdminController;
+use App\Http\Controllers\bouquet\bouquetController;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\Grade\GradeController;
 use App\Http\Controllers\lesson\lessonController;
-use App\Http\Controllers\section\sectionController;
 use App\Http\Controllers\teacher\teacheController;
-use App\Http\Controllers\user\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\section\sectionController;
+use App\Http\Controllers\classroom\classroomController;
+use App\Http\Controllers\Package\PackageController;
+use App\Http\Controllers\platformdata\platformdataController;
+use App\Http\Controllers\thelesson\thelessonController;
+use App\Mail\TestMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +28,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.auth.login');
 });
+
+
 
 
 
@@ -36,7 +45,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth:admin'])->name('admin.dashboard');
+})->middleware(['auth:admin' ])->name('admin.dashboard');
 
 require __DIR__.'/adminauth.php';
 
@@ -55,9 +64,13 @@ require __DIR__.'/adminauth.php';
 
          Route::resource('Teachers', teacheController::class);
          Route::resource('lesson', lessonController::class);
+         Route::resource('bouquets', bouquetController::class);
 
-        Route::resource('Students', StudentController::class);
         Route::resource('getusers', UserController::class);
+        Route::resource('Package', PackageController::class);
+        Route::resource('alladmin', AdminController::class);
+        Route::resource('users', UserController::class);
+        Route::resource('platformdata', platformdataController::class);
 
         // Route::get('getusers' , [Controller::class ,'getusers'])->name('getusers');
         // Route::put('getusers/{id}' , [Controller::class ,'update'])->name('getusersupdate');

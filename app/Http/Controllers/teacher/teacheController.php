@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\teacher;
 
 use Exception;
+use App\Models\Admin;
 use App\Models\Teacher;
 use App\Models\Material;
 use Illuminate\Http\Request;
@@ -19,8 +20,8 @@ class teacheController extends Controller
      */
     public function index()
     {
-      $Teachers =  Teacher::all();
-      return view('admin.pages.Teachers.Teachers',compact('Teachers'));
+        $teachers = Admin::where('nametype', 'teacher')->get();
+      return view('admin.pages.Teachers.Teachers',compact('teachers'));
 
     }
 
@@ -31,8 +32,7 @@ class teacheController extends Controller
      */
     public function create()
     {
-        $materials = Material::all();
-        return view('admin.pages.Teachers.create',compact('materials'));
+        return view('admin.pages.Teachers.create');
 
     }
 
@@ -42,23 +42,25 @@ class teacheController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTeachers $request)
+    public function store(Request $request)
     {
-        try {
-            $Teachers = new Teacher();
-            $Teachers->Email = $request->Email;
-            $Teachers->Password =  Hash::make($request->Password);
-            $Teachers->Name = $request->Name;
-            $Teachers->material_id = $request->material_id;
-            $Teachers->Joining_Date = $request->Joining_Date;
-            $Teachers->Address = $request->Address;
-            $Teachers->save();
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'password' => 'required',
+                'nametype' => 'required',
+            ]);
+            $type = 'admin';
+            $admins = Admin::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'nametype' =>  $request->nametype,
+            ]);
             toastr()->success(trans('messages.success'));
             return redirect()->route('Teachers.index');
-        }
-        catch (Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
-        }
+
+
     }
 
     /**
@@ -81,9 +83,8 @@ class teacheController extends Controller
     public function edit($id)
     {
         $Teachers = Teacher::findOrFail($id);
-        $materials = Material::all();
 
-        return view('admin.pages.Teachers.edit',compact('Teachers','materials'));
+        return view('admin.pages.Teachers.edit',compact('Teachers'));
     }
 
     /**
@@ -95,21 +96,16 @@ class teacheController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $Teachers = Teacher::findOrFail($request->id);
-            $Teachers->Email = $request->Email;
-            $Teachers->Password =  Hash::make($request->Password);
-            $Teachers->Name = $request->Name;
-            $Teachers->material_id = $request->material_id;
-            $Teachers->Joining_Date = $request->Joining_Date;
-            $Teachers->Address = $request->Address;
-            $Teachers->save();
-            toastr()->success(trans('messages.Update'));
-            return redirect()->route('Teachers.index');
-        }
-        catch (Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
-        }
+        $Admin = Admin::findOrFail($request->id);
+        $Admin->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nametype' => $request->nametype,
+
+        ]);
+        toastr()->success(trans('messages.success'));
+        return redirect()->route('Teachers.index');
     }
 
     /**

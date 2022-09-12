@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Numberlesson extends Model
 {
     use HasFactory;
-    protected $fillable =['Name'];
+    protected $guarded = [];
 
 }

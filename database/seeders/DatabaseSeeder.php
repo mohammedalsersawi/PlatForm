@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classroom;
+use App\Models\Grade;
 use App\Models\Numberlesson;
+use App\Models\Section;
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +18,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
 
-        $this->call(MaterialTableSeeder::class);
-        $this->call(UnitTableSeeder::class);
-        $this->call(NumberlessonTableSeeder::class);
-
+        Grade::truncate();
+        Classroom::truncate();
+        Section::truncate();
+        Numberlesson::truncate();
+        Unit::truncate();
+        $this->call(gradesTableSeeder::class);
+        $this->call(clasesTableSeeder::class);
+        $this->call(sectionsTableSeeder::class);
+        $this->call(numberTableSeeder::class);
+        $this->call(uniteTableSeeder::class);
     }
 }

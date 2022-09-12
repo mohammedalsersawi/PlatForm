@@ -47,8 +47,11 @@
                         <tr>
                             <th>#</th>
                             <th>اسم المرحلة</th>
+                            <th>slug</th>
                             <th>العمليات</th>
-                            {{ Auth::guard('admin')->user()->name }}
+
+                            {{-- {{ Auth::guard('admin')->user()->name }} --}}
+
 
                         </tr>
                     </thead>
@@ -58,98 +61,101 @@
                             <?php $i++; ?>
                             <tr>
                                 <td>{{ $i }}</td>
-                                <td>{{ $Grad->Name }}</td>
+                                <td>{{ $Grad->name }}</td>
+                                <td>{{ $Grad->slug }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                    <button disabled type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                         data-target="#edit{{ $Grad->id }}"
                                         title="{{ trans('Grade_tranc.Edit') }}"><i class="fa fa-edit"></i></button>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                    <button disabled type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                         data-target="#delete{{ $Grad->id }}"
                                         title="{{ trans('Grade_tranc.Delete') }}"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
 
-                            <div class="">
-                                <!-- edite_modal_Grade -->
-    <div class="modal fade" id="edit{{ $Grad->id }}" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                        id="exampleModalLabel">
-                        تعديل مرحلة
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- add_form -->
-                    <form action="{{ route('Grades.update', 'test') }}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="row">
-                            <div class="col">
-                                <label for="Name" class="mr-sm-2">اسم الحقل:</label>
-                                <input id="Name" type="text" name="Name" class="form-control" value="{{  $Grad->Name}}">
-                                <input type="hidden" id="id" name="id" value="{{ $Grad->id }}" class="form-control">
-                            </div>
-                        </div>
+
+                            <!-- edite_modal_Grade -->
+                            <div class="modal fade" id="edit{{ $Grad->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+                                                id="exampleModalLabel">
+                                                تعديل مرحلة
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- add_form -->
+                                            <form action="{{ route('Grades.update', 'test') }}" method="POST">
+                                                @csrf
+                                                @method('put')
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="Name" class="mr-sm-2">اسم الحقل:</label>
+                                                        <input id="Name" type="text" name="Name"
+                                                            class="form-control" value="{{ $Grad->Name }}">
+                                                        <input type="hidden" id="id" name="id"
+                                                            value="{{ $Grad->id }}" class="form-control">
+                                                    </div>
+                                                </div>
 
 
-                        <br><br>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">اغلاق</button>
-                    <button type="submit"
-                        class="btn btn-success">تاكيد</button>
-                </div>
-                </form>
+                                                <br><br>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">اغلاق</button>
+                                            <button type="submit" class="btn btn-success">تاكيد</button>
+                                        </div>
+                                        </form>
 
-            </div>
-        </div>
+                                    </div>
                                 </div>
-
-        <div class="">
-        <!-- delete_modal_Grade -->
-        <div class="modal fade" id="delete{{ $Grad->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                            id="exampleModalLabel">
-                           حذف مرحلة
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('Grades.destroy', 'test') }}" method="post">
-                            {{ method_field('Delete') }}
-                            @csrf
-                            {{ trans('Grade_tranc.Warning_Grade') }}
-                            <input id="id" type="hidden" name="id" class="form-control"
-                                value="{{ $Grad->id }}">
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">اغلق</button>
-                                <button type="submit"
-                                    class="btn btn-danger">تاكيد</button>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        </div>
+                                <div class="">
+                                    <!-- delete_modal_Grade -->
+                                    <div class="modal fade" id="delete{{ $Grad->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+                                                        id="exampleModalLabel">
+                                                        حذف مرحلة
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('Grades.destroy', 'test') }}"
+                                                        method="post">
+                                                        {{ method_field('Delete') }}
+                                                        @csrf
+                                                        {{ trans('Grade_tranc.Warning_Grade') }}
+                                                        <input id="id" type="hidden" name="id"
+                                                            class="form-control" value="{{ $Grad->id }}">
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">اغلق</button>
+                                                            <button type="submit"
+                                                                class="btn btn-danger">تاكيد</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                         @endforeach
 
 
@@ -168,7 +174,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">
-                   اضافة مرحلة
+                    اضافة مرحلة
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -182,15 +188,14 @@
                         <div class="col">
                             <label for="Name" class="mr-sm-2"><b>اسم المرحلة</b>
                                 :</label>
-                            <input id="Name" type="text" name="Name" class="form-control">
+                            <input id="Name" type="text" disabled name="Name" class="form-control">
                         </div>
                     </div>
                     <br><br>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-dismiss="modal">اغلق</button>
-                <button type="submit" class="btn btn-success">تاكيد</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلق</button>
+                <button disabled type="submit" class="btn btn-success">تاكيد</button>
             </div>
             </form>
 

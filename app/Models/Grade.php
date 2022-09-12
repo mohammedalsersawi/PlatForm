@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model
 {
     use HasFactory;
-    protected $fillable = ['Name' , 'Notes'];
+    protected $guarded = [];
     protected $table = 'Grades';
     public $timestamps = true;
 
@@ -16,13 +16,13 @@ class Grade extends Model
 
     public function Sections()
     {
-        return $this->hasMany('App\Models\Section', 'Grade_id');
+        return $this->hasMany(Section::class);
     }
 
 
     public function classes()
     {
-        return $this->hasMany(Classroom::class, 'Grade_id');
+        return $this->hasMany(Classroom::class);
     }
 
 }

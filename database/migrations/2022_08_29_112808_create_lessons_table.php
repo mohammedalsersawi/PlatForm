@@ -15,14 +15,15 @@ class CreateLessonsTable extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->string('Name_lesson');
-            $table->string('Number_lesson');
-            $table->string('Name_Unit');
-            $table->string('video');
-            $table->string('Not');
-            $table->string('Not_solve');
-            $table->string('Testlinke');
-            $table->foreignId('Section_id')->cascadeOnDelete();
+            $table->string('name_lesson');
+            $table->string('number_lesson');
+            $table->string('name_Unit');
+            $table->string('testlinke');
+            $table->string('video')->nullable();
+            $table->string('not')->nullable();
+            $table->string('not_solve')->nullable();
+            $table->foreignId('section_id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('clases_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

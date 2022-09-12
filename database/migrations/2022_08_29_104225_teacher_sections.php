@@ -15,12 +15,12 @@ class TeacherSections extends Migration
     {
         Schema::create('teacher_sections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('section_id');
+            // $table->unsignedBigInteger('teacher_id');
+            // $table->unsignedBigInteger('section_id');
 
             // foreign keys
-            $table->foreign('teacher_id')->references('id')->on('teachers')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('section_id')->references('id')->on('sections')->cascadeOnDelete()->cascadeOnUpdate();
+            // $table->foreign('teacher_id')->references('id')->on('teachers')->cascadeOnDelete()->cascadeOnUpdate();
+            // $table->foreign('section_id')->references('id')->on('sections')->cascadeOnDelete()->cascadeOnUpdate();
 
         });
     }

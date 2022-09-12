@@ -10,22 +10,27 @@ class Classroom extends Model
     use HasFactory;
     protected $table = 'Classrooms';
     public $timestamps = true;
-    protected $fillable=['Name_Class','Grade_id'];
+    protected $guarded = [];
 
 
     // علاقة بين الصفوف المراحل الدراسية لجلب اسم المرحلة في جدول الصفوف
 
     public function Section()
     {
-        return $this->hasMany(Section::class, 'Class_id');
+        return $this->hasMany(Section::class);
     }
     public function grade()
     {
-        return $this->belongsTo(Grade::class, 'Grade_id');
+        return $this->belongsTo(Grade::class);
     }
 
     public function SectionClass()
     {
-        return $this->hasMany(Section::class, 'Class_id');
+        return $this->hasMany(Section::class);
+    }
+
+    public function classes()
+    {
+        return $this->hasMany(Package::class);
     }
 }

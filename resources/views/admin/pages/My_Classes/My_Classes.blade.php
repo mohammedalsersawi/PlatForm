@@ -23,111 +23,113 @@
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+@foreach ($errors->all() as $error)
+<li>{{ $error }}</li>
+@endforeach
+</ul>
+</div>
+@endif
 
-                <button type="button" class="button x-small" data-toggle="modal" data-target="#exampleModal">
-                    اضافة صف
-                </button>
-                <button type="button" class="button x-small" id="btn_delete_all">
-                    حذف الصفوف المختارة
-                </button>
-                <br><br>
-                {{-- <form action="{{ route('Filter_Classes') }}" method="POST">
-                {{ csrf_field() }}
-                <select class="selectpicker" data-style="btn-info" name="Grade_id" required
-                        onchange="this.form.submit()">
-                    <option value="" selected disabled>{{ trans('My_Classes_trans.Search_By_Grade') }}</option>
-                    @foreach ($Grades as $Grade)
-                        <option value="{{ $Grade->id }}">{{ $Grade->Name }}</option>
-                    @endforeach
-                </select>
-            </form> --}}
-                <br>
+<button type="button" class="button x-small" data-toggle="modal" data-target="#exampleModal">
+اضافة صف
+</button>
+<button disabled type="button" class="button x-small" id="btn_delete_all">
+حذف الصفوف المختارة
+</button>
+<br><br>
+{{-- <form action="{{ route('Filter_Classes') }}" method="POST">
+{{ csrf_field() }}
+<select class="selectpicker" data-style="btn-info" name="Grade_id" required
+onchange="this.form.submit()">
+<option value="" selected disabled>{{ trans('My_Classes_trans.Search_By_Grade') }}</option>
+@foreach ($Grades as $Grade)
+<option value="{{ $Grade->id }}">{{ $Grade->Name }}</option>
+@endforeach
+</select>
+</form> --}}
+<br>
 
 
-                <div class="table-responsive">
-                    <table id="datatable" class="table  table-hover table-sm table-bordered p-0" data-page-length="50"
-                        style="text-align: center">
-                        <thead>
-                            <tr>
-                                <th><input name="select_all" id="example-select-all" type="checkbox"
-                                        onclick="CheckAll('box1', this)" /></th>
-                                <th>#</th>
-                                <th>اسم الصف</th>
-                                <th>اسم المرحلة</th>
-                                <th>العمليات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (isset($details))
-                                <?php $List_Classes = $details; ?>
-                            @else
-                                <?php $List_Classes = $My_Classes; ?>
-                            @endif
-                            <?php $i = 0; ?>
-                            @foreach ($My_Classes as $My_Class)
-                                <tr>
-                                    <?php $i++; ?>
-                                    <td><input type="checkbox" value="{{ $My_Class->id }}" class="box1"></td>
-                                    <td>{{ $i }}</td>
-                                    <td>{{ $My_Class->Name_Class }}</td>
-                                    <td>{{ $My_Class->grade->Name }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#edit{{ $My_Class->id }}"
-                                            title="{{ trans('Grades_trans.Edit') }}"><i class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{ $My_Class->id }}"
-                                            title="{{ trans('Grades_trans.Delete') }}"><i
-                                                class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
+<div class="table-responsive">
+<table id="datatable" class="table  table-hover table-sm table-bordered p-0" data-page-length="50"
+style="text-align: center">
+<thead>
+<tr>
+<th hidden><input name="select_all" id="example-select-all" type="checkbox"
+onclick="CheckAll('box1', this)" /></th>
+<th>#</th>
+<th>اسم الصف</th>
+<th>Slug</th>
+<th>اسم المرحلة</th>
+<th>العمليات</th>
+</tr>
+</thead>
+<tbody>
+@if (isset($details))
+<?php $List_Classes = $details; ?>
+@else
+<?php $List_Classes = $My_Classes; ?>
+@endif
+<?php $i = 0; ?>
+@foreach ($My_Classes as $My_Class)
+<tr>
 
-                                <!-- edit_modal_Grade -->
-                                <div class="modal fade" id="edit{{ $My_Class->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                                                    id="exampleModalLabel">
-                                                    {{ trans('Grade_tranc.edit_Grade') }}
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- add_form -->
-                                                <form action="{{ route('Classrooms.update', 'test') }}" method="post">
-                                                    {{ method_field('patch') }}
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label for="Name" class="mr-sm-2">اسم الصف
-                                                                :</label>
-                                                            <input id="Name" type="text" name="Name_Class"
-                                                                class="form-control"
-                                                                value="{{ $My_Class->Name_Class }}">
-                                                            <input id="id" type="hidden" name="id"
-                                                                class="form-control" value="{{ $My_Class->id }}">
-                                                        </div>
+<td hidden><input hidden type="checkbox" value="{{ $My_Class->id }}" class="box1"></td>
+<td>{{ $My_Class->id }}</td>
+<td>{{ $My_Class->name }}</td>
+<td>{{ $My_Class->slug }}</td>
+<td>{{ $My_Class->grade->name }}</td>
+<td>
+<button disabled type="button" class="btn btn-info btn-sm" data-toggle="modal"
+    data-target="#edit{{ $My_Class->id }}"
+    title="{{ trans('Grades_trans.Edit') }}"><i class="fa fa-edit"></i></button>
+<button disabled type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+    data-target="#delete{{ $My_Class->id }}"
+    title="{{ trans('Grades_trans.Delete') }}"><i
+        class="fa fa-trash"></i></button>
+</td>
+</tr>
 
-                                                    </div> <br>
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlTextarea1">اسم المرحلة
-                                                            :</label>
-                                                        <select class="form-control form-control-lg"
-                                                            id="exampleFormControlSelect1" name="Grade_id">
-                                                            <option value="{{ $My_Class->grade->id }}">
-                                                                {{ $My_Class->grade->Name }}
-                                                            </option>
+<!-- edit_modal_Grade -->
+<div class="modal fade" id="edit{{ $My_Class->id }}" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+            id="exampleModalLabel">
+            {{ trans('Grade_tranc.edit_Grade') }}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- add_form -->
+        <form action="{{ route('Classrooms.update', 'test') }}" method="post">
+            {{ method_field('patch') }}
+            @csrf
+            <div class="row">
+                <div class="col">
+                    <label for="Name" class="mr-sm-2">اسم الصف
+                        :</label>
+                    <input id="Name" type="text" name="Name_Class"
+                        class="form-control"
+                        value="{{ $My_Class->Name_Class }}">
+                    <input id="id" type="hidden" name="id"
+                        class="form-control" value="{{ $My_Class->id }}">
+                </div>
+
+            </div> <br>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">اسم المرحلة
+                    :</label>
+                <select class="form-control form-control-lg"
+                    id="exampleFormControlSelect1" name="Grade_id">
+                    <option value="{{ $My_Class->grade->id }}">
+                        {{ $My_Class->grade->Name }}
+                    </option>
                                                             @foreach ($Grades as $Grade)
                                                                 <option value="{{ $Grade->id }}">
                                                                     {{ $Grade->Name }}
@@ -219,14 +221,14 @@
                                             <div class="col">
                                                 <label for="Name" class="mr-sm-2">اسم الصف
                                                     :</label>
-                                                <input class="form-control" type="text" name="Name_Class" />
+                                                <input disabled class="form-control" type="text" name="Name_Class" />
                                             </div>
                                             <div class="col">
                                                 <label for="Name_en" class="mr-sm-2">اسم المرحلة
                                                     :</label>
 
                                                 <div class="box">
-                                                    <select class="form-control" name="Grade_id"
+                                                    <select disabled class="form-control" name="Grade_id"
                                                         class="form-control">
                                                         @foreach ($Grades as $Grade)
                                                             <option value="{{ $Grade->id }}">{{ $Grade->Name }}
@@ -240,7 +242,7 @@
                                             <div class="col">
                                                 <label for="Name_en" class="mr-sm-2">حذف صف
                                                     :</label>
-                                                <input class="btn btn-danger btn-block" data-repeater-delete
+                                                <input disabled class="btn btn-danger btn-block" data-repeater-delete
                                                     type="button" value="حذف صف" />
                                             </div>
                                         </div>
@@ -248,15 +250,15 @@
                                 </div>
                                 <div class="row mt-20">
                                     <div class="col-12">
-                                        <input class="button" data-repeater-create type="button" value="ادراج صف" />
+                                        <input class="button" disabled data-repeater-create type="button" value="ادراج صف" />
                                     </div>
 
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button  type="button" class="btn btn-secondary"
                                         data-dismiss="modal">اغلاق</button>
-                                    <button type="submit" class="btn btn-success">تاكيد</button>
+                                    <button disabled type="submit" class="btn btn-success">تاكيد</button>
                                 </div>
 
 

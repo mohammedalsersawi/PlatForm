@@ -18,6 +18,7 @@ class GradeController extends Controller
      */
     public function index()
     {
+
         $Grads = Grade::all();
         return view('admin.pages.Grades.Grades' , compact('Grads'));
     }
@@ -40,6 +41,7 @@ class GradeController extends Controller
      */
     public function store(StoreGradesRequest $request)
     {
+
         $validated = $request->validated();
         $Grade = new Grade();
 
@@ -60,7 +62,7 @@ class GradeController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -121,5 +123,23 @@ class GradeController extends Controller
             toastr()->error(trans('Grade_tranc.delete_Grade_Error'));
             return redirect()->route('Grades.index');
     }
+
+
+
 }
+// private function rules() {
+//     return[
+//         'Name' => 'required|unique:grades,Name,'.$this->id,
+//     ];
+
+//     }
+
+//     private function messages() {
+//         return[
+//             'Name.required' => trans('validation.required'),
+//             'Name.unique' => trans('validation.unique'),
+//             'Name_en.required' => trans('validation.required'),
+//             'Name_en.unique' => trans('validation.unique'),
+//         ];
+//}
 }

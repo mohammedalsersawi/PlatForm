@@ -15,10 +15,10 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('Name_Material');
-            $table->integer('Status');
-            $table->foreignId('Grade_id')->cascadeOnDelete();
-			$table->foreignId('Class_id')->cascadeOnDelete();
+            $table->string('name');
+            $table->string('slug');
+            // $table->foreignId('grade_id')->cascadeOnDelete();
+			// $table->foreignId('class_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

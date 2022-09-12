@@ -13,24 +13,31 @@ class Section extends Model
 
 public function My_classs()
 {
-    return $this->belongsTo(Classroom::class, 'Class_id');
+    return $this->belongsTo(Classroom::class);
 }
 public function grades()
 {
-    return $this->belongsTo(Grade::class, 'Grade_id');
+    return $this->belongsTo(Grade::class);
 }
-
-// علاقة الاقسام مع المعلمين
-public function teachers()
+public function users()
 {
-    return $this->belongsToMany(Teacher::class, 'teacher_sections');
+    return $this->belongsTo(User::class ,'user_id');
 }
+// // علاقة الاقسام مع المعلمين
+// public function teachers()
+// {
+//     return $this->belongsToMany(Teacher::class, 'teacher_sections');
+// }
 
 public function lessons()
 {
-    return $this->hasMany(lesson::class, 'Section_id');
+    return $this->hasMany(lesson::class);
 }
 
+public function packages()
+{
+    return $this->hasMany(Package::class);
+}
 
 
 }

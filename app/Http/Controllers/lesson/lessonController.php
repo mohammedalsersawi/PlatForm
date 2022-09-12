@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\lesson;
 
-use App\Http\Controllers\Controller;
-use App\Models\Lesson;
-use App\Models\Numberlesson;
-use App\Models\Section;
 use App\Models\Unit;
+use App\Models\Lesson;
+use App\Models\Section;
+use App\Models\Classroom;
+use App\Models\Numberlesson;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 
 class lessonController extends Controller
@@ -20,13 +22,23 @@ class lessonController extends Controller
      */
     public function index()
     {
-        $Numberlessons = Numberlesson::all();
+        $numberlessons = Numberlesson::all();
         $Sections = Section::all();
         $Units = Unit::all();
         $lessons = Lesson::all();
+        $clasess = Classroom::all();
 
 
-        return view('admin.pages.lesson.index' , compact('Numberlessons' , 'Sections' , 'Units' , 'lessons'));
+        return view(
+            'admin.pages.lesson.index',
+            compact(
+                'numberlessons',
+                'clasess',
+                'Sections',
+                'Units',
+                'lessons'
+            )
+        );
     }
     /**
      * Show the form for creating a new resource.
@@ -35,7 +47,22 @@ class lessonController extends Controller
      */
     public function create()
     {
-        //
+
+        $numberlessons = Numberlesson::all();
+        $Sections = Section::all();
+        $Units = Unit::all();
+        $lessons = Lesson::all();
+        $clasess = Classroom::all();
+        return view(
+            'admin.pages.lesson.create',
+            compact(
+                'numberlessons',
+                'clasess',
+                'Sections',
+                'Units',
+                'lessons'
+            )
+        );
     }
 
     /**
@@ -47,46 +74,58 @@ class lessonController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'Number_lesson' => 'required',
-            'Section_id' => 'required',
-            'Name_Unit' => 'required',
-            'Name_lesson' => 'required',
-            'Not' => 'required',
-            'Not_solve' => 'nullable',
-            'Testlinke' => 'nullable',
+            'name_lesson' => 'required',
+            'section_id' => 'required',
+            'name_Unit' => 'required',
+            'number_lesson' => 'required',
+            'testlinke' => 'nullable',
+            'not' => 'required',
+            'not_solve' => 'nullable',
             'video' => 'required',
 
         ]);
 
-         // upload Not
-         $Notname = 'Not_' . rand() . '_' . $request->file('Not')->getClientOriginalName();
-         $request->file('Not')->move(public_path('uploads/Not'), $Notname);
 
+        if ($image = $request->file('not')) {
+            $destinationPath = 'uploads/not';
+            $profileImage = 'Not_solve_' . Str::random(30) . '_' . $request->file('not')->getClientOriginalName();
+            $image->move($destinationPath, $profileImage);
+            $request['not'] = "$profileImage";
+        } else {
+            $profileImage = null;
+        }
+        if ($image = $request->file('not_solve')) {
+            $destinationPath = 'uploads/Not_solve';
+            $notsolvename = 'Not_solve_' . Str::random(30) . '_' . $request->file('not_solve')->getClientOriginalName();
+            $image->move($destinationPath, $notsolvename);
+            $request['not_solve'] = "$notsolvename";
+        } else {
+            $notsolvename = null;
+        }
+        if ($image = $request->file('video')) {
+            $destinationPath = 'uploads/video';
+            $videoname = 'video_' . time() . '_' . $request->file('video')->getClientOriginalName();
+            $image->move($destinationPath, $videoname);
+            $request['not'] = "$videoname";
+        } else {
+            $videoname = null;
+        }
 
-         // upload Not_solvename
-        $Not_solvename = 'Not_solve_' . rand() . '_' . $request->file('Not_solve')->getClientOriginalName();
-        $request->file('Not_solve')->move(public_path('uploads/Not_solve'), $Not_solvename);
+        $lesson =  lesson::create([
+            'number_lesson' => $request->number_lesson,
+            'section_id' => $request->section_id,
+            'clases_id' => $request->clases_id,
+            'name_Unit' => $request->name_Unit,
+            'name_lesson' => $request->name_lesson,
+            'testlinke' => $request->testlinke,
+            'not'   => $profileImage,
+            'not_solve'   => $notsolvename,
+            'video'   => $videoname,
 
+        ]);
 
-
-         // upload image
-         $videoname = 'video_' . time() . '_' . $request->file('video')->getClientOriginalName();
-         $request->file('video')->move(public_path('uploads/video'), $videoname);
-
-
-         $lesson =  lesson::create([
-            'Number_lesson' =>$request->Number_lesson,
-            'Section_id' => $request->Section_id,
-            'Name_Unit' => $request->Name_Unit,
-            'Name_lesson' => $request->Name_lesson,
-            'Not'   => $Notname,
-            'Not_solve' => $Not_solvename,
-            'Testlinke' => $request->Testlinke,
-            'video' => $videoname,
-         ]);
-
-         toastr()->success(trans('messages.success'));
-         return redirect()->route('lesson.index');
+        toastr()->success(trans('messages.success'));
+        return redirect()->route('lesson.index');
     }
 
     /**
@@ -108,7 +147,7 @@ class lessonController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -118,42 +157,54 @@ class lessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-public function update(Request $request, $id)
+    public function update(Request $request)
     {
 
-        $lessons = Lesson::findorFail($request->id);
-        $Not = $lessons->Not;
-        $Not_solve = $lessons->Not_solve;
-        $video = $lessons->video;
 
-        if ($request->hasFile('Not')) {
-            File::delete(public_path('uploads/Not/' . $lessons->Notname));
-            $Notnamenew = 'Not_' . rand() . '_' . $request->file('Not')->getClientOriginalName();
-        } else {
-        }
 
-        if ($request->hasFile('Not_solve')) {
-            File::delete(public_path('uploads/Not_solve/' . $lessons->Not_solvename));
-            $Notsolvename = 'Not_solve_' . rand() . '_' . $request->file('Not_solve')->getClientOriginalName();
-        } else {
-        }
+        $request->validate([
+            'name_lesson' => 'required',
+            'section_id' => 'required',
+            'name_Unit' => 'required',
+            'number_lesson' => 'required',
+            'testlinke' => 'nullable',
+            'not' => 'nullable',
+            'not_solve' => 'nullable',
+            'video' => 'nullable',
 
-        if ($request->hasFile('video')) {
-            File::delete(public_path('uploads/Not/' . $lessons->videoname));
-            $videonamenew = 'video_' . rand() . '_' . $request->file('video')->getClientOriginalName();
-        } else {
-        }
-
-        $lessons->update([
-            'Number_lesson' => $request->Number_lesson,
-            'Section_id' => $request->Section_id,
-            'Name_Unit' => $request->Name_Unit,
-            'Name_lesson' => $request->Name_lesson,
-            'Testlinke' => $request->Testlinke,
-            'Not' =>  $Notnamenew,
-            'Not_solve' => $Notsolvename,
-            'video' => $videonamenew,
         ]);
+        $lessons = Lesson::findOrFail($request->id);
+
+
+
+
+
+        if ($not = $request->file('not')) {
+
+            File::delete(public_path('uploads/not/' . $lessons->not));
+            $destinationPath = 'uploads/not/';
+            $lessons->not = Str::random(30). "." . $not->getClientOriginalExtension();
+            $not->move($destinationPath, $lessons->not);
+        }
+
+
+
+        if ($not_solve = $request->file('not_solve')) {
+            File::delete(public_path('uploads/Not_solve/' . $lessons->not_solve));
+            $destinationPath = 'uploads/Not_solve/';
+             $lessons->not_solve = Str::random(30) . "." . $not_solve->getClientOriginalExtension();
+            $not_solve->move($destinationPath,  $lessons->not_solve);
+        }
+
+        if ($video = $request->file('video')) {
+            File::delete(public_path('uploads/video/' . $lessons->video));
+            $destinationPath = 'uploads/video/';
+            $lessons->video = Str::random(30) . "." . $video->getClientOriginalExtension();
+            $video->move($destinationPath, $lessons->video);
+        }
+
+
+        $lessons->save();
         toastr()->success(trans('messages.success'));
         return redirect()->route('lesson.index');
     }
@@ -166,12 +217,12 @@ public function update(Request $request, $id)
      */
     public function destroy(Request $request)
     {
-       $lessons = Lesson::findOrFail($request->id);
-        File::delete(public_path('uploads/Not/' . $lessons->Not));
-        File::delete(public_path('uploads/Not_solve/' . $lessons->Not_solve));
+        $lessons = Lesson::findOrFail($request->id);
+        File::delete(public_path('uploads/not/' . $lessons->not));
+        File::delete(public_path('uploads/Not_solve/' . $lessons->not_solve));
         File::delete(public_path('uploads/video/' . $lessons->video));
 
-       $lessons->delete();
+        $lessons->delete();
         toastr()->error(trans('messages.Delete'));
         return redirect()->route('lesson.index');
     }

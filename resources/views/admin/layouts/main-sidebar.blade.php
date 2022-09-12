@@ -18,11 +18,13 @@
                     </li>
                     <!-- menu title -->
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المتطلبات</li>
+
+
                     <!--Grades-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#elements">
-                            <div class="pull-left"><i class="ti-palette"></i><span
-                                    class="right-nav-text">المراحل</span></div>
+                            <div class="pull-left"><i class="ti-palette"></i><span class="right-nav-text">المراحل</span>
+                            </div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
@@ -58,8 +60,8 @@
                         </ul>
                     </li>
 
-                     <!-- library-->
-                     <li>
+                    <!-- lesson-->
+                    <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#library-icon">
                             <div class="pull-left"><i class="fas fa-book"></i><span
                                     class="right-nav-text"><b>الدروس</b></span></div>
@@ -68,23 +70,43 @@
                         </a>
                         <ul id="library-icon" class="collapse" data-parent="#sidebarnav">
                             <li> <a href="{{ route('lesson.index') }}">قائمة الدروس</a> </li>
+                            <li> <a href="{{ route('lesson.create') }}">اضافة درس</a> </li>
                         </ul>
                     </li>
 
-                    <!-- students-->
+
+                    @if (Auth::guard('admin')->user()->nametype == 'admin')
+
+
+
+
+
                     <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#students-menu">
-                            <div class="pull-left"><i class="fas fa-user-graduate"></i></i></i><span
-                                    class="right-nav-text">الطلاب</span></div>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Users-icon">
+                            <div class="pull-left"><i class="fas fa-users"></i><span
+                                    class="right-nav-text">بيانات المنصة</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
-                        <ul id="students-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="{{ route('Students.index') }}">قائمة الطلاب</a> </li>
+                        <ul id="Users-icon" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{ route('platformdata.index') }}">قاءمة البيانات</a> </li>
+
                         </ul>
                     </li>
 
-                    <!-- Teachers-->
+
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Accounts-menu">
+                            <div class="pull-left"><i class="fas fa-money-bill-wave-alt"></i><span
+                                    class="right-nav-text">الحزم</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="Accounts-menu" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{ route('Package.index') }}">قائمة الحزم</a> </li>
+                        </ul>
+                    </li>
+
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Teachers-menu">
                             <div class="pull-left"><i class="fas fa-chalkboard-teacher"></i></i><span
@@ -97,62 +119,56 @@
                         </ul>
                     </li>
 
-                                        <!-- Parents-->
-                                        <li>
-                                            <a href="javascript:void(0);" data-toggle="collapse" data-target="#Parents-menu">
-                                                <div class="pull-left"><i class="fas fa-user-tie"></i><span
-                                                        class="right-nav-text">الطلاب</span></div>
-                                                <div class="pull-right"><i class="ti-plus"></i></div>
-                                                <div class="clearfix"></div>
-                                            </a>
-                                            <ul id="Parents-menu" class="collapse" data-parent="#sidebarnav">
-                                                <li> <a href="{{ route('getusers.index') }}">قائمة الطلاب</a> </li>
-                                            </ul>
-                                        </li>
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#students-menu">
+                            <div class="pull-left"><i class="fas fa-user-graduate"></i></i></i><span
+                                    class="right-nav-text">الادمن</span></div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="students-menu" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{ route('alladmin.index') }}">قائمة الادمن</a> </li>
+                        </ul>
+                    </li>
 
-
-{{--
                     <!-- Parents-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Parents-menu">
                             <div class="pull-left"><i class="fas fa-user-tie"></i><span
-                                    class="right-nav-text">{{ trans('main_tranc.Parents') }}</span></div>
+                                    class="right-nav-text">الطلاب</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Parents-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="">{{ trans('main_tranc.List_Parents') }}</a> </li>
+                            <li> <a href="{{ route('getusers.index') }}">قائمة الطلاب</a> </li>
                         </ul>
                     </li>
 
-                    <!-- Accounts-->
-                    <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Accounts-menu">
-                            <div class="pull-left"><i class="fas fa-money-bill-wave-alt"></i><span
-                                    class="right-nav-text">{{ trans('main_tranc.Accounts') }}</span></div>
-                            <div class="pull-right"><i class="ti-plus"></i></div>
-                            <div class="clearfix"></div>
-                        </a>
-                        <ul id="Accounts-menu" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="calendar.html">Events Calendar </a> </li>
-                            <li> <a href="calendar-list.html">List Calendar</a> </li>
-                        </ul>
-                    </li>
 
-                    <!-- Attendance-->
+
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Attendance-icon">
                             <div class="pull-left"><i class="fas fa-calendar-alt"></i><span
-                                    class="right-nav-text">{{ trans('main_tranc.Attendance') }}</span></div>
+                                    class="right-nav-text">العروض</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Attendance-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="fontawesome-icon.html">font Awesome</a> </li>
-                            <li> <a href="themify-icons.html">Themify icons</a> </li>
-                            <li> <a href="weather-icon.html">Weather icons</a> </li>
+                            <li> <a href="{{ route('bouquets.index') }}">قائمة العروض</a> </li>
                         </ul>
                     </li>
+
+
+
+                    @endif
+
+
+
+                    <!-- Accounts-->
+
+ {{-- <!-- Parents-->
+                    <!-- Attendance-->
+
 
                     <!-- Exams-->
                     <li>
@@ -219,19 +235,7 @@
 
 
                     <!-- Users-->
-                    <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Users-icon">
-                            <div class="pull-left"><i class="fas fa-users"></i><span
-                                    class="right-nav-text">{{ trans('main_tranc.Users') }}</span></div>
-                            <div class="pull-right"><i class="ti-plus"></i></div>
-                            <div class="clearfix"></div>
-                        </a>
-                        <ul id="Users-icon" class="collapse" data-parent="#sidebarnav">
-                            <li> <a href="fontawesome-icon.html">font Awesome</a> </li>
-                            <li> <a href="themify-icons.html">Themify icons</a> </li>
-                            <li> <a href="weather-icon.html">Weather icons</a> </li>
-                        </ul>
-                    </li> --}}
+                    --}}
 
                 </ul>
             </div>

@@ -21,24 +21,9 @@ class sectionController extends Controller
      */
     public function index()
     {
-        $Grades = Grade::with(['Sections'])->get();
-        $Sections = Section::all();
-        $list_Grades = Grade::all();
-        $list_classs = Classroom::all();
-        $Materials = Material::all();
-        $Units = Unit::all();
-        $teachers = Teacher::all();
+          $Sections = Section::all();
 
-
-        return view('admin.pages.Sections.Sections', compact(
-            'Grades',
-            'list_Grades',
-            'Materials',
-            'Units',
-            'Sections',
-            'teachers',
-            'list_classs'
-        ));
+        return view('admin.pages.Sections.Sections', compact('Sections'));
     }
 
     /**
@@ -146,10 +131,10 @@ class sectionController extends Controller
        return redirect()->route('Sections.index');
     }
 
-    public function getclasses($id)
-    {
-        $list_classes = Classroom::where("Grade_id", $id)->pluck("Name_Class", "id");
+    // public function getclasses($id)
+    // {
+    //     $list_classes = Classroom::where("Grade_id", $id)->pluck("Name_Class", "id");
 
-        return $list_classes;
-    }
+    //     return $list_classes;
+    // }
 }

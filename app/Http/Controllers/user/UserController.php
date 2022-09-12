@@ -5,6 +5,8 @@ namespace App\Http\Controllers\user;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -37,7 +39,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,except,id',
+            'password' => 'required',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        ]);
+        $users = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'mobile' =>  $request->mobile,
+        ]);
+        toastr()->success(trans('messages.success'));
+        return redirect()->route('users.index');
     }
 
     /**
@@ -75,11 +90,16 @@ class UserController extends Controller
 
 
 
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->mobile = $request->mobile;
+        $users->password = Hash::make($request->password);
+
               if(isset($request->Status)) {
                 $users->Status = 1;
-              } else {
+               } else {
                 $users->Status = 0;
-              }
+               }
               $users->save();
 
 

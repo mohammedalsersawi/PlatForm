@@ -12,6 +12,10 @@ class Lesson extends Model
 
     public function section()
     {
-        return $this->belongsTo(Section::class, 'Section_id');
+        return $this->belongsTo(Section::class);
+    }
+    public function clasess()
+    {
+        return $this->belongsTo(Classroom::class , 'clases_id');
     }
 }
