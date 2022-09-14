@@ -49,8 +49,7 @@ Route::group(['middleware' => 'api'], function($router) {
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
 
-//    Route::get('grade', [GradeApiController::class, 'index']);
-//    //
+
 
     Route::group(['middleware' => 'checkPassword'], function (){
         Route::get('grade', [GradeApiController::class, 'index']);

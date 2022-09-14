@@ -24,17 +24,7 @@ class TestApiController extends Controller
             'DATA' => $data,
         ]);
 
-        // if( $Status == 1){
-        //     return response()->json([
-        //         'message' => 'all grade done',
-        //         'status' => true,
-        //         'DATA' => $data,
-        //     ]);
-        // }
-        // return response()->json([
-        //     'message' => ' grade done',
-        //     'status' => true,
-        // ]);
+
 
     }
     // public function index(Request $request, $user_id, $section_id)
