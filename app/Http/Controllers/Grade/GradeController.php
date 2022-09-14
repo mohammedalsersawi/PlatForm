@@ -20,7 +20,7 @@ class GradeController extends Controller
     {
 
         $Grads = Grade::all();
-        return view('admin.pages.Grades.Grades' , compact('Grads'));
+        return view('admin.pages.grades.Grades' , compact('Grads'));
     }
 
     /**

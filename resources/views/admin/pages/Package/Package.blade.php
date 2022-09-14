@@ -46,8 +46,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>user id </th>
                             <th>الطالب</th>
+                            <th>الرقم التسلسي</th>
                             <th>المادة</th>
                             <th>الصف</th>
                             <th>الحالة</th>
@@ -64,8 +64,8 @@
                             <?php $i++; ?>
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $item->user_id}}</td>
                                 <td>{{ $item->user->name }}</td>
+                                <td>{{ $item->user_id}}</td>
                                 <td>{{ $item->sections->name }}</td>
                                 <td>{{ $item->classes->name }}</td>
                                 <td>

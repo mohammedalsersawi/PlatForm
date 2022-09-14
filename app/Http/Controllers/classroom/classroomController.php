@@ -19,7 +19,7 @@ class classroomController extends Controller
     {
         $My_Classes = Classroom::all();
         $Grades = Grade::all();
-        return view('admin.pages.My_Classes.My_Classes' ,compact('My_Classes' , 'Grades'));
+        return view('admin.pages.classes.My_Classes' ,compact('My_Classes' , 'Grades'));
     }
 
     /**

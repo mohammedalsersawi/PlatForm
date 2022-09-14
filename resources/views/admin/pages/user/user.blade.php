@@ -45,7 +45,7 @@
                 <table id="datatable" class="table table-striped table-bordered p-0">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>الرقم التسلسلي</th>
                             <th>الاسم</th>
                             <th>الايمل</th>
                             <th>الهاتف</th>
