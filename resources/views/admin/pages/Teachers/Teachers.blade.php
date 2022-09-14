@@ -61,6 +61,7 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
+
                                 <td class="badge badge-warning">{{ $item->nametype }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>

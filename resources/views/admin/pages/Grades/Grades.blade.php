@@ -56,11 +56,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 0; ?>
+                        <?php $ii = 0; ?>
                         @foreach ($Grads as $Grad)
                             <?php $i++; ?>
                             <tr>
-                                <td>{{ $i }}</td>
+                                <td>{{ $ii }}</td>
                                 <td>{{ $Grad->name }}</td>
                                 <td>{{ $Grad->slug }}</td>
                                 <td>

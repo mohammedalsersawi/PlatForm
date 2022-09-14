@@ -247,7 +247,7 @@
                     <div class="row">
                         <div class="col">
                             <label for="">تاريخ الانتهاء</label>
-                        <input class="form-control" type="text"  id="datepicker-action" name="date" data-date-format="yyyy-mm-dd"  required>
+                        <input class="form-control" type="date"  id="datepicker-action" name="date" data-date-format="yyyy-mm-dd"  required>
 
                         </div>
                     </div>
