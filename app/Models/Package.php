@@ -19,23 +19,18 @@ class Package extends Model
 
     ];
 
-public function sections()
-{
-    return $this->belongsTo(Section::class , 'section_id');
-}
-
-public function user()
+    public function sections()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(Section::class, 'section_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function classes()
     {
-        return $this->belongsTo(Classroom::class ,'clases_id');
+        return $this->belongsTo(Classroom::class, 'clases_id');
     }
-
-
-
-
-
 }

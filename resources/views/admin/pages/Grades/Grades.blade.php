@@ -56,27 +56,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $ii = 0; ?>
-                        @foreach ($Grads as $Grad)
-                            <?php $i++; ?>
+                        @foreach ($grades as $item)
                             <tr>
-                                <td>{{ $ii }}</td>
-                                <td>{{ $Grad->name }}</td>
-                                <td>{{ $Grad->slug }}</td>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->slug }}</td>
                                 <td>
                                     <button disabled type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#edit{{ $Grad->id }}"
+                                        data-target="#edit{{ $item->id }}"
                                         title="{{ trans('Grade_tranc.Edit') }}"><i class="fa fa-edit"></i></button>
 
                                     <button disabled type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#delete{{ $Grad->id }}"
+                                        data-target="#delete{{ $item->id }}"
                                         title="{{ trans('Grade_tranc.Delete') }}"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
 
 
                             <!-- edite_modal_Grade -->
-                            <div class="modal fade" id="edit{{ $Grad->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="edit{{ $item->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -99,9 +97,9 @@
                                                     <div class="col">
                                                         <label for="Name" class="mr-sm-2">اسم الحقل:</label>
                                                         <input id="Name" type="text" name="Name"
-                                                            class="form-control" value="{{ $Grad->Name }}">
+                                                            class="form-control" value="{{ $item->name }}">
                                                         <input type="hidden" id="id" name="id"
-                                                            value="{{ $Grad->id }}" class="form-control">
+                                                            value="{{ $item->id }}" class="form-control">
                                                     </div>
                                                 </div>
 
@@ -121,7 +119,7 @@
 
                                 <div class="">
                                     <!-- delete_modal_Grade -->
-                                    <div class="modal fade" id="delete{{ $Grad->id }}" tabindex="-1"
+                                    <div class="modal fade" id="delete{{ $item->id }}" tabindex="-1"
                                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -142,7 +140,7 @@
                                                         @csrf
                                                         {{ trans('Grade_tranc.Warning_Grade') }}
                                                         <input id="id" type="hidden" name="id"
-                                                            class="form-control" value="{{ $Grad->id }}">
+                                                            class="form-control" value="{{ $item->id }}">
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">اغلق</button>

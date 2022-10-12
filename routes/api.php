@@ -7,6 +7,7 @@ use App\Http\Controllers\api\GradeApiController;
 use App\Http\Controllers\api\lessonApiController;
 use App\Http\Controllers\api\SectionApiController;
 use App\Http\Controllers\api\TestApiController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\JWTController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,25 +38,22 @@ use App\Models\Grade;
 //     $grade = Grade::findOrFail($id)->with(['classes']);
 //     dd($grade);
 // });
+        Route::post('/register', [JWTController::class, 'register']);
+        Route::post('/login', [JWTController::class, 'login']);
+        Route::post('/logout', [JWTController::class, 'logout']);
+        Route::post('/refresh', [JWTController::class, 'refresh']);
+        Route::post('/profile', [JWTController::class, 'profile']);
+        Route::put('/changepassword', [JWTController::class, 'changepassword']);
+        Route::put('/changeprofile', [JWTController::class, 'changeprofile']);
+
+Route::group(['middleware' => 'api'], function ($router) {
 
 
-Route::group(['middleware' => 'api'], function($router) {
-
-
-
-    Route::post('/register', [JWTController::class, 'register']);
-    Route::post('/login', [JWTController::class, 'login']);
-    Route::post('/logout', [JWTController::class, 'logout']);
-    Route::post('/refresh', [JWTController::class, 'refresh']);
-    Route::post('/profile', [JWTController::class, 'profile']);
-
-
-
-    Route::group(['middleware' => 'checkPassword'], function (){
+    Route::group(['middleware' => 'checkPassword'], function () {
         Route::get('grade', [GradeApiController::class, 'index']);
-        Route::get('class' , [ClassApiController::class , 'index']);
-        Route::get('section' , [SectionApiController::class , 'index']);
-        Route::get('lesson' , [lessonApiController::class , 'index']);
+        Route::get('class/{id}', [ClassApiController::class, 'index']);
+        Route::get('section', [SectionApiController::class, 'index']);
+        Route::get('lesson', [lessonApiController::class, 'index']);
         // Route::get('test/{id}' , [TestApiController::class , 'index']);
 
     });
@@ -63,12 +61,15 @@ Route::group(['middleware' => 'api'], function($router) {
 
 
     Route::get('allData', [AllDataApiController::class, 'index']);
+    Route::post('storeCart', [AllDataApiController::class, 'storeCart']);
+    Route::get('checkout', [AllDataApiController::class, 'checkout']);
+    Route::get('thanks', [AllDataApiController::class, 'thanks'])->name('thanks');
 
-    // Route::get('test/{user_id}/{section_id}' , [TestApiController::class , 'index']);
-    Route::get('test/{user_id}' , [TestApiController::class , 'index']);
 
+
+    Route::get('test/{user_id}/{section_id}' , [TestApiController::class , 'lessonsbysection']);
+    Route::get('test/{user_id}', [TestApiController::class, 'index']);
 });
 
-Route::get('test' , function(){
-
+Route::get('test', function () {
 });

@@ -34,7 +34,7 @@ public function lessons()
     return $this->hasMany(lesson::class);
 }
 
-public function packages()
+public function sections()
 {
     return $this->hasMany(Package::class);
 }

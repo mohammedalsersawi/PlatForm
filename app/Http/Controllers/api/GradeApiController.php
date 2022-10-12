@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class GradeApiController extends Controller
 {
@@ -24,6 +25,9 @@ class GradeApiController extends Controller
      */
     public function index(Request $request)
     {
+
+
+
 
         $grades =  Grade::all();
             return response()->json([

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -105,6 +105,58 @@ class JWTController extends Controller
     {
         return response()->json(auth()->user());
     }
+
+    public function changeprofile(Request$request)
+        {
+            $user = Auth::user();
+            $profile =  User::where('id' , $user->id)->update(['name' => $request->name , 'email' => $request->email]);
+
+            return response()->json([
+                'message' => 'User successfully changeprofile',
+                'user' => $profile
+            ], 201);
+        }
+
+    public function changepassword(Request$request){
+        $request->validate([
+//            'user_id' => 'required|integer',
+            'passwordOld'=>'required|min:6',
+            'passwordNew'=>'required|min:6',
+            'passwordNew1'=>'required|min:6',
+        ]);
+        $user = Auth::user();
+//        if($user->id==$request->user_id){
+            $passwordOld= Hash::check($request->passwordOld, $user->password);
+        if(!$passwordOld){
+            return 'The password is incorrect';
+        }else{
+           if($request->passwordNew==$request->passwordNew1){
+           $pp = bcrypt($request->passwordNew);
+
+            $table = User::where('id' , $user->id)->update(['password' => $pp]);
+
+               if($table){
+                   return Response()->json([
+                       'message' => 'Password successfully changed',
+                       'status'=>200,
+                   ],200);
+               }else{
+                   return Response()->json([
+                       'message' => 'NOt Faound',
+                   ],404);
+               }
+           }else{
+               return 'Password is not the same';
+           }
+        }
+//        }else{
+//            return Response()->json([
+//                'message' => 'You do not have permissions for this user',
+//            ],300);
+//        }
+    }
+
+
 
     /**
      * Get the token array structure.

@@ -18,6 +18,7 @@ class CreatePackagesTable extends Migration
             $table->foreignId('user_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('section_id')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('clases_id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->double('amount');
             $table->integer('Status')->default(1);
             $table->timestamps();
         });

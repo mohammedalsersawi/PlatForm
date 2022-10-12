@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            {{-- <div class="col">
                                 <label for="">المادة</label>
                                 <select type="text" name="section_id" class="form-control">
                                     <option value="{{ $item->sections->id  }}"> {{$item->sections->name  }}</option>
@@ -39,7 +39,7 @@
                                         <option value="{{ $Section->id }}"> {{ $Section->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
                             <div class="col">

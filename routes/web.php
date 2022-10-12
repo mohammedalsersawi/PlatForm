@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\AdminController\AdminController;
-use App\Http\Controllers\bouquet\bouquetController;
+use App\Mail\TestMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\Grade\GradeController;
 use App\Http\Controllers\lesson\lessonController;
+use App\Http\Controllers\api\AllDataApiController;
 use App\Http\Controllers\teacher\teacheController;
+use App\Http\Controllers\bouquet\bouquetController;
+use App\Http\Controllers\Package\PackageController;
 use App\Http\Controllers\section\sectionController;
 use App\Http\Controllers\classroom\classroomController;
-use App\Http\Controllers\Package\PackageController;
-use App\Http\Controllers\platformdata\platformdataController;
 use App\Http\Controllers\thelesson\thelessonController;
-use App\Mail\TestMail;
+use App\Http\Controllers\AdminController\AdminController;
+use App\Http\Controllers\platformdata\platformdataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,9 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/poid', function () {
+    return view('M');
+});
 
 
 

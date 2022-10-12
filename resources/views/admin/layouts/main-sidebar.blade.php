@@ -75,7 +75,7 @@
                     </li>
 
 
-                    @if (Auth::guard('admin')->user()->nametype == 'admin')
+                    @if (Auth::guard('admin')->user())
 
 
 

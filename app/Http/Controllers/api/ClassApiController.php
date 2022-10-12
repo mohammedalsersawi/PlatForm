@@ -14,10 +14,10 @@ class ClassApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request , $id)
     {
 
-        $Class = Classroom::all();
+        $Class = Classroom::where('grade_id' , $id)->get();
             return response()->json([
             'message'=> 'all grade done',
             'status' => true ,
